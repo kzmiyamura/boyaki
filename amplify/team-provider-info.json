@@ -42,12 +42,6 @@
       "auth": {
         "boyakic5339756": {}
       },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "dz9954k17vad8",
-          "type": "manual"
-        }
-      },
       "api": {
         "boyaki": {}
       }
