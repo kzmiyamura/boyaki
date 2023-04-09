@@ -14,4 +14,54 @@ type Post
   content: String!
   owner: String @index(name: "BySpecificOwner", sortKeyFields: ["timestamp"], queryField: "listPostsBySpecificOwner")
   timestamp: Int!
-}          
+}
+type Mentor @model @searchable
+ @auth(rules: [
+    {allow: owner, identityClaim: "sub", provider: userPools, operations: [create, read, update, delete]},
+    {allow: public, provider: apiKey, operations: [read, update]}, 
+    {allow: groups, groups: ["admin", "Admins"], operations: [read, update]}])
+{
+  id: ID!
+  owner: String!
+  name: String!
+  active: Boolean
+  tokenAddress: [String]
+  profilePic: AWSURL
+  priceMonth: Int
+  priceMin: Int
+  message: String
+  ability: String
+  sex: String
+  tags: [String]
+  reviewsLength: Int
+  rating: Float
+  score: [Float]
+  lastLogin: String
+  online: Boolean
+  video: Boolean
+  notificationsRead: Boolean
+  searchable: Boolean
+  canRank: Boolean
+  allowTrial: Boolean
+  idDocToken: String
+  idDocTokenBack: String
+  year: Int
+  month: Int
+  location: String
+  gallery: [AWSURL]
+  twitter: String
+  facebook: String
+  instagram: String
+  youtube: String
+  defaultDash: Boolean
+  availability: String
+  availDetail: String
+  disabled: Boolean
+  grade: Int
+  publish: Boolean
+  ban: Boolean
+  createdAt: String
+  updatedAt: String
+  statNumConnections: Int
+  statNumFavorites: Int
+}
