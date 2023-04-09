@@ -1,4 +1,4 @@
-type Mentor @model @searchable @auth(rules: [{allow: owner, identityClaim: "sub", provider: userPools, operations: [create, read, update, delete]}, {allow: public, provider: apiKey, operations: [read, update]}, {allow: groups, groups: ["admin", "Admins"], operations: [read, update]}]) {
+type Mentor @model @searchable {
   id: ID!
   owner: String!
   name: String!
@@ -44,7 +44,7 @@ type Mentor @model @searchable @auth(rules: [{allow: owner, identityClaim: "sub"
   statNumFavorites: Int
 }
 
-type MentorSetting @model(subscriptions: null) @auth(rules: [{allow: owner, identityClaim: "sub", provider: userPools, operations: [read, create, update, delete]}, {allow: groups, groups: ["admin", "Admins"], operations: [read, update]}]) {
+type MentorSetting @model(subscriptions: null) {
   id: ID!
   owner: String! @index(name: "ByOwner", queryField: "mentorSettingByOwner")
   receivedRequestEmail: Boolean
@@ -60,7 +60,7 @@ type MentorSetting @model(subscriptions: null) @auth(rules: [{allow: owner, iden
   updatedAt: AWSDateTime!
 }
 
-type Client @model @searchable @auth(rules: [{allow: owner, identityClaim: "sub", operations: [read, create, update, delete]}, {allow: public, provider: apiKey, operations: [read]}, {allow: groups, groups: ["admin", "Admins"], operations: [read, update, delete]}]) {
+type Client @model @searchable {
   id: ID!
   owner: String!
   name: String!
@@ -94,14 +94,14 @@ type Client @model @searchable @auth(rules: [{allow: owner, identityClaim: "sub"
   ban: Boolean
 }
 
-type OneSignal @model(subscriptions: null) @auth(rules: [{allow: owner, identityClaim: "sub", operations: [create, update, delete, read]}, {allow: groups, groups: ["admin", "Admins"], operations: [read]}]) {
+type OneSignal @model(subscriptions: null) {
   owner: String! @primaryKey
   playerIds: [String]
   createdAt: String
   updatedAt: String
 }
 
-type MobileNotifications @model(subscriptions: null) @auth(rules: [{allow: owner, identityClaim: "sub", operations: [create, update, delete, read]}, {allow: groups, groups: ["admin", "Admins"], operations: [read]}]) {
+type MobileNotifications @model(subscriptions: null) {
   owner: String! @primaryKey
   optOutPushNotifications: Boolean
   addresses: [String]
@@ -111,7 +111,7 @@ type MobileNotifications @model(subscriptions: null) @auth(rules: [{allow: owner
   updatedAt: String
 }
 
-type Connection @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type Connection @model(subscriptions: null) {
   id: ID!
   type: String!
   favorite: Boolean
@@ -142,7 +142,7 @@ type Connection @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   discarder: String
 }
 
-type DeletedConnection @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type DeletedConnection @model(subscriptions: null) {
   id: ID!
   stripeCustomerId: String
   status: String
@@ -161,7 +161,7 @@ type DeletedConnection @model(subscriptions: null) @auth(rules: [{allow: private
   expirationEpoch: AWSTimestamp
 }
 
-type Chat @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type Chat @model(subscriptions: null) @searchable {
   id: ID!
   conversationID: ID
   client: String! @index(name: "ByClientByMentor", queryField: "chatsByClientByMentor", sortKeyFields: ["mentor"]) @index(name: "ByClientByClientRead", queryField: "chatsByClientByClientRead", sortKeyFields: ["clientRead"])
@@ -183,7 +183,7 @@ type Chat @model(subscriptions: null) @searchable @auth(rules: [{allow: private}
   sortDateTime: String
 }
 
-type ChatRoom @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type ChatRoom @model(subscriptions: null) {
   id: ID!
   mentor: Boolean
   mentorId: String!
@@ -193,7 +193,7 @@ type ChatRoom @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   updatedAt: String
 }
 
-type Message @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type Message @model(subscriptions: null) {
   id: ID!
   read: Boolean
   sender: String! @index(name: "BySender", queryField: "messagesBySender", sortKeyFields: ["createdAt"])
@@ -209,7 +209,7 @@ type Message @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   updatedAt: String
 }
 
-type MessageNotification @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type MessageNotification @model(subscriptions: null) {
   id: ID!
   read: Boolean
   type: String!
@@ -224,7 +224,7 @@ type MessageNotification @model(subscriptions: null) @auth(rules: [{allow: priva
   sortDateTime: String!
 }
 
-type Review @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type Review @model(subscriptions: null) {
   id: ID!
   type: String
   read: Boolean!
@@ -245,7 +245,7 @@ type Review @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   sortDateTime: String!
 }
 
-type ReviewResponseNotification @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type ReviewResponseNotification @model(subscriptions: null) {
   id: ID!
   type: String
   read: Boolean!
@@ -261,7 +261,7 @@ type ReviewResponseNotification @model(subscriptions: null) @auth(rules: [{allow
   sortDateTime: String!
 }
 
-type VideoNotification @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type VideoNotification @model(subscriptions: null) {
   id: ID!
   type: String!
   read: Boolean
@@ -281,7 +281,7 @@ type VideoNotification @model(subscriptions: null) @auth(rules: [{allow: private
   expirationEpoch: AWSTimestamp
 }
 
-type ExitVideoNotification @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type ExitVideoNotification @model(subscriptions: null) {
   id: ID!
   type: String!
   read: Boolean
@@ -299,7 +299,7 @@ type ExitVideoNotification @model(subscriptions: null) @auth(rules: [{allow: pri
   expirationEpoch: AWSTimestamp
 }
 
-type PriceChangeNotification @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type PriceChangeNotification @model(subscriptions: null) {
   id: ID!
   type: String!
   read: Boolean
@@ -317,7 +317,7 @@ type PriceChangeNotification @model(subscriptions: null) @auth(rules: [{allow: p
   sortDateTime: String
 }
 
-type ServerNotification @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type ServerNotification @model(subscriptions: null) {
   id: ID!
   receiver: String! @index(name: "ByReceiver", queryField: "serverNotificationsByReceiver")
   read: Boolean!
@@ -330,7 +330,7 @@ type ServerNotification @model(subscriptions: null) @auth(rules: [{allow: privat
   expirationEpoch: AWSTimestamp
 }
 
-type Favorite @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type Favorite @model(subscriptions: null) {
   id: ID!
   clientId: String! @index(name: "ByClientId", queryField: "favoritesByClientId", sortKeyFields: ["updatedAt"])
   mentorId: String! @index(name: "ByMentorId", queryField: "favoritesByMentorId", sortKeyFields: ["updatedAt"])
@@ -338,7 +338,7 @@ type Favorite @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   updatedAt: String
 }
 
-type Coupon @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type Coupon @model(subscriptions: null) {
   id: ID!
   mentorId: String! @index(name: "ByMentorId", queryField: "couponByMentorId")
   promoCode: String! @index(name: "ByPromoCode", queryField: "couponByPromoCode")
@@ -354,7 +354,7 @@ type Coupon @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   sortDateTime: String
 }
 
-type Banner @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type Banner @model(subscriptions: null) {
   id: ID!
   text: String!
   display: Boolean!
@@ -362,7 +362,7 @@ type Banner @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   updatedAt: AWSDateTime!
 }
 
-type ProductHistory @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type ProductHistory @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String!
   priceMonth: Int
@@ -374,7 +374,7 @@ type ProductHistory @model(subscriptions: null) @searchable @auth(rules: [{allow
   updatedAt: AWSDateTime!
 }
 
-type FeePlan @model @auth(rules: [{allow: private}]) {
+type FeePlan @model {
   id: ID!
   planType: String!
   name: String!
@@ -382,7 +382,7 @@ type FeePlan @model @auth(rules: [{allow: private}]) {
   updatedAt: AWSDateTime!
 }
 
-type BasicFeePlanParam @model @auth(rules: [{allow: private}]) {
+type BasicFeePlanParam @model {
   id: ID!
   planId: String! @primaryKey(sortKeyFields: ["startDateTime"])
   defaultPlatformFee: Float!
@@ -401,7 +401,7 @@ type BasicFeePlanParam @model @auth(rules: [{allow: private}]) {
   updatedAt: AWSDateTime!
 }
 
-type PurchaseHistory @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type PurchaseHistory @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String!
   clientId: String!
@@ -417,7 +417,7 @@ type PurchaseHistory @model(subscriptions: null) @searchable @auth(rules: [{allo
   updatedAt: AWSDateTime!
 }
 
-type InvoicePaid @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type InvoicePaid @model(subscriptions: null) @searchable {
   invoiceId: String! @primaryKey(sortKeyFields: ["createdAt"])
   stripeAccountId: String!
   stripeCustomerId: String!
@@ -442,7 +442,7 @@ type InvoicePaid @model(subscriptions: null) @searchable @auth(rules: [{allow: p
   updatedAt: AWSDateTime!
 }
 
-type InvoiceFailed @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type InvoiceFailed @model(subscriptions: null) @searchable {
   invoiceId: String! @primaryKey(sortKeyFields: ["createdAt"])
   stripeAccountId: String!
   stripeCustomerId: String!
@@ -467,7 +467,7 @@ type InvoiceFailed @model(subscriptions: null) @searchable @auth(rules: [{allow:
   updatedAt: AWSDateTime!
 }
 
-type Trial @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type Trial @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String!
   clientId: String!
@@ -484,7 +484,7 @@ type Trial @model(subscriptions: null) @searchable @auth(rules: [{allow: private
   updatedAt: AWSDateTime!
 }
 
-type EmailSchedule @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type EmailSchedule @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   email: AWSEmail!
   purpose: String!
@@ -496,7 +496,7 @@ type EmailSchedule @model(subscriptions: null) @searchable @auth(rules: [{allow:
   updatedAt: AWSDateTime!
 }
 
-type BasicContract @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type BasicContract @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String!
   clientId: String!
@@ -512,7 +512,7 @@ type BasicContract @model(subscriptions: null) @searchable @auth(rules: [{allow:
   updatedAt: AWSDateTime!
 }
 
-type BasicContractSoon @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type BasicContractSoon @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String!
   clientId: String!
@@ -522,7 +522,7 @@ type BasicContractSoon @model(subscriptions: null) @searchable @auth(rules: [{al
   updatedAt: AWSDateTime!
 }
 
-type BasicContractLater @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type BasicContractLater @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String!
   clientId: String!
@@ -533,7 +533,7 @@ type BasicContractLater @model(subscriptions: null) @searchable @auth(rules: [{a
   updatedAt: AWSDateTime!
 }
 
-type ReservationStopMentoring @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type ReservationStopMentoring @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String!
   clientId: String!
@@ -542,7 +542,7 @@ type ReservationStopMentoring @model(subscriptions: null) @searchable @auth(rule
   updatedAt: AWSDateTime!
 }
 
-type MasterData @model(subscriptions: null) @auth(rules: [{allow: public, provider: apiKey, operations: [read]}, {allow: groups, groups: ["admin", "Admins"]}]) {
+type MasterData @model(subscriptions: null) {
   id: ID!
   category: String! @index(name: "ByCategory", queryField: "masterDataByCategory")
   name: String! @index(name: "ByName", queryField: "masterDataByName")
@@ -552,7 +552,7 @@ type MasterData @model(subscriptions: null) @auth(rules: [{allow: public, provid
   updatedAt: AWSDateTime!
 }
 
-type MailTemplate @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type MailTemplate @model(subscriptions: null) {
   id: ID!
   purpose: String! @index(name: "ByPurpose", queryField: "mailTemplateByPurpose")
   subject: String!
@@ -561,7 +561,7 @@ type MailTemplate @model(subscriptions: null) @auth(rules: [{allow: private}]) {
   updatedAt: AWSDateTime!
 }
 
-type VideoTimestamp @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type VideoTimestamp @model(subscriptions: null) @searchable {
   usageRecordId: String! @primaryKey(sortKeyFields: ["createdAt"])
   quantity: Int!
   mentorId: String!
@@ -570,7 +570,7 @@ type VideoTimestamp @model(subscriptions: null) @searchable @auth(rules: [{allow
   updatedAt: AWSDateTime!
 }
 
-type MentorGradeMaster @model(subscriptions: null) @auth(rules: [{allow: private}]) {
+type MentorGradeMaster @model(subscriptions: null) {
   grade: Int! @primaryKey
   name: String
   priceMonthMinimum: Int!
@@ -581,7 +581,7 @@ type MentorGradeMaster @model(subscriptions: null) @auth(rules: [{allow: private
   updatedAt: AWSDateTime!
 }
 
-type MentorGradeUpRequest @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type MentorGradeUpRequest @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   mentorId: String! @index(name: "ByMentorId", queryField: "mentorGradeUpRequestByMentorId", sortKeyFields: ["createdAt"])
   currentGrade: Int!
@@ -596,7 +596,7 @@ type MentorGradeUpRequest @model(subscriptions: null) @searchable @auth(rules: [
   updatedAt: AWSDateTime!
 }
 
-type LightNotice @model(subscriptions: null) @searchable @auth(rules: [{allow: private}]) {
+type LightNotice @model(subscriptions: null) @searchable {
   id: ID! @primaryKey(sortKeyFields: ["createdAt"])
   type: String!
   noticeType: String!
