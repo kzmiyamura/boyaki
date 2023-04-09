@@ -18,7 +18,6 @@ type Post
 type Mentor @model @searchable
  @auth(rules: [
     {allow: owner, identityClaim: "sub", provider: userPools, operations: [create, read, update, delete]},
-    {allow: public, provider: apiKey, operations: [read, update]}, 
     {allow: groups, groups: ["admin", "Admins"], operations: [read, update]}])
 {
   id: ID!
